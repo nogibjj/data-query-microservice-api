@@ -1,1 +1,1 @@
-# data-query-microservice-api
+# IDS706 Group Project
