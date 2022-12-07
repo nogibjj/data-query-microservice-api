@@ -3,14 +3,14 @@ install:
 		pip install -r requirements.txt
 
 format:	
-	black *.py mylib/*py 
+	black *.py 10_Code/*py 
 
 lint:
 	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py dblib
-	pylint --disable=R,C *.py mylib/*.py
+	pylint --disable=R,C *.py 10_Code/*.py
 
 test:
-	python -m pytest -vv --cov=mylib --cov=main test_*.py
+	python -m pytest -vv --cov=10_Code --cov=main test_*.py
 
 build:
  	#build container
@@ -18,15 +18,13 @@ build:
 
 run:
 	#run docker
-	docker run -p 127.0.0.1:8080:8080 5ef41dd238a1
+	# docker run -p 127.0.0.1:8080:8080 6b246acc760c
 
 deploy:
  	#deploy
-	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 667719398048.dkr.ecr.us-east-1.amazonaws.com
-	docker build -t activity_to_cure_boredom .
-	docker tag activity_to_cure_boredom:latest 667719398048.dkr.ecr.us-east-1.amazonaws.com/activity_to_cure_boredom:latest
-	docker push 667719398048.dkr.ecr.us-east-1.amazonaws.com/activity_to_cure_boredom:latest
-	# docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 667719398048.dkr.ecr.us-east-1.amazonaws.com
-	# docker login -u AWS -p $(aws ecr get-login-password --region the-region-you-are-in) xxxxxxxxx.dkr.ecr.the-region-you-are-in.amazonaws.com
+	# aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 667719398048.dkr.ecr.us-east-1.amazonaws.com
+	# docker build -t name_of_app .
+	# docker tag name_of_app:latest 667719398048.dkr.ecr.us-east-1.amazonaws.com/name_of_app:latest
+	# docker push 667719398048.dkr.ecr.us-east-1.amazonaws.com/name_of_app:latest
 
-all: install format lint test deploy
+all: install format lint #test deploy

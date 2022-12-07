@@ -1,46 +1,48 @@
 from fastapi import FastAPI
 import uvicorn
-from mylib.logic import get_activity_by_price
-from mylib.logic import get_activity_by_type
-from mylib.logic import get_activity_by_participant_count
+
+# from mylib.logic import function_1
+# from mylib.logic import function_2
+# from mylib.logic import function_3
 
 app = FastAPI()
 
+# Here, I pasted my overall structure of project 4 that is relevant to this project.
 
-@app.get("/")
-async def root():
-    return {
-        "message": "Bored API.  Get your random activity by calling /types, /price  or /participants ."
-    }
-
-
-@app.get("/types/{value}")
-async def types(value: str):
-    """Get random activity according to type inputted"""
-
-    result = get_activity_by_type(value)
-
-    return {"result": result}
+# @app.get("/")
+# async def root():
+#     return {
+#         "message": "Message to write here soon."
+#     }
 
 
-@app.get("/price/{value}")
-async def price(value: str):
+# @app.get("/types/{value}")
+# async def types(value: str):
+#     """docstring"""
 
-    """Get random activity according to price inputted"""
+#     result = function1(value)
 
-    result = get_activity_by_price(value)
-
-    return {"result": result}
+#     return {"result": result}
 
 
-@app.get("/participants/{value}")
-async def participants(value: str):
+# @app.get("/price/{value}")
+# async def price(value: str):
 
-    """Get random activity according to number of participants inputted"""
+#     """docstring"""
 
-    result = get_activity_by_participant_count(value)
+#     result = function2(value)
 
-    return {"result": result}
+#     return {"result": result}
+
+
+# @app.get("/participants/{value}")
+# async def participants(value: str):
+
+#     """docstring"""
+
+#     result = function3(value)
+
+#     return {"result": result}
 
 
 if __name__ == "__main__":

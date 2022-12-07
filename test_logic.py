@@ -1,34 +1,23 @@
-from mylib.logic import get_activity_by_participant_count
-from mylib.logic import get_activity_by_type
-from mylib.logic import get_activity_by_price
+# from mylib.logic import get_activity_by_participant_count
+# from mylib.logic import get_activity_by_type
+# from mylib.logic import get_activity_by_price
+
+# these are the import statements for the testing of the logic.py
+
+# def test_f1():
+
+# doc string and assert statement
 
 
-def test_participant():
+# def test_f2():
 
-    """Test get_activity_by_participant_count function"""
-
-    result = get_activity_by_participant_count("5")
-
-    assert result["participants"] == 5
+# doc string and assert statement
 
 
-def test_type():
+# def test_f3():
 
-    """Test get_activity_by_type function"""
+# doc string and assert statement
 
-    result = get_activity_by_type("education")
-
-    assert result["type"] == "education"
-
-
-def test_price():
-
-    """Test get_activity_by_price function"""
-
-    result = get_activity_by_price("0.1")
-
-    assert result["price"] == 0.1
-
-test_participant()
-test_type()
-test_price()
+# test_function_1
+# test_function_2
+# test_function_3
