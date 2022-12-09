@@ -1,11 +1,12 @@
-from kaggle.api.kaggle_api_extended import KaggleApi
-from zipfile import ZipFile
-import pandas
-import random
-import subprocess
+# pylint: disable-msg=E0611 
+# from kaggle.api.kaggle_api_extended import KaggleApi
+# from zipfile import ZipFile
+# import pandas
+# import random
+# import subprocess
 
-api = KaggleApi()
-api.authenticate()
+# api = KaggleApi()
+# api.authenticate()
 
 # api.dataset_download_files('dilwong/flightprices')
 # api.dataset_download_files('berkeleyearth/climate-change-earth-surface-temperature-data')

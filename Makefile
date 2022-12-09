@@ -7,10 +7,10 @@ format:
 
 lint:
 	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py dblib
-	pylint --disable=R,C *.py 10_Code/*.py
+	pylint --disable=R,C *.py 00_Source_Data/*.py 10_Code/*.py
 
 test:
-	python -m pytest -vv --cov=10_Code --cov=main test_*.py
+	# python -m pytest -vv --cov=10_Code --cov=main test_*.py
 
 build:
  	#build container

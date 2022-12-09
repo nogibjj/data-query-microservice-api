@@ -1,7 +1,7 @@
-from fastapi.testclient import TestClient
-from main import app
+# from fastapi.testclient import TestClient
+# from main import app
 
-client = TestClient(app)
+# client = TestClient(app)
 
 
 # testing the main.py, the file that wraps the logic.py under the fast api.
