@@ -1,1 +1,3 @@
+[![Docker Image Sent to ECR and Built Via Code Build](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoieHM5ZEN2ZGRzRVZyWU5RdGs4MkswbkVCZXhoYm5KQ0ZyL1piKzhoYkdQSFJqUWFOVzA5ZE9zbXBKSFpvbW1zRm9NdHluU1gzNUVQRTdBSnR6dHNGMFhZPSIsIml2UGFyYW1ldGVyU3BlYyI6IjNKZTY1WEhudytSemhrZE0iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
+
 # IDS706 Group Project
