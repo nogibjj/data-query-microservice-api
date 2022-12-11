@@ -52,5 +52,5 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-	"postCreateCommand": "chmod +x setup.sh && ./setup.sh"
+	"postCreateCommand": "./setup.sh"
 }
