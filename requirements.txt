@@ -58,3 +58,5 @@ wrapt==1.14.1
 kaggle
 pandas
 numpy
+matplotlib
+psycopg2-binary
