@@ -27,4 +27,4 @@ deploy:
 	# docker tag name_of_app:latest 667719398048.dkr.ecr.us-east-1.amazonaws.com/name_of_app:latest
 	# docker push 667719398048.dkr.ecr.us-east-1.amazonaws.com/name_of_app:latest
 
-all: install format lint #test deploy
+all: install format #lint test deploy

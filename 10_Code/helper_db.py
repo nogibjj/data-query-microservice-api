@@ -1,10 +1,8 @@
 import psycopg2
 import os
 
-RDS_HOSTNAME_global_temperatures = str(
-    "global-temperatures.cndtu3jnk9za.us-east-1.rds.amazonaws.com"
-)
-RDS_PASSWORD = "postgres"
+RDS_HOSTNAME_global_temperatures = os.environ.get("RDS_HOSTNAME")
+RDS_PASSWORD = os.environ.get("RDS_PASSWORD")
 
 
 def connect_to_db():
@@ -17,4 +15,3 @@ def connect_to_db():
     )
     cursor = connection.cursor()
     return cursor
-
