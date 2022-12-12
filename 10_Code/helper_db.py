@@ -1,8 +1,8 @@
 import psycopg2
 import os
 
-RDS_HOSTNAME_global_temperatures = os.environ.get("RDS_HOSTNAME")
-RDS_PASSWORD = os.environ.get("RDS_PASSWORD")
+# RDS_HOSTNAME_global_temperatures = os.environ.get("RDS_HOSTNAME")
+# RDS_PASSWORD = os.environ.get("RDS_PASSWORD")
 
 
 def connect_to_db():
