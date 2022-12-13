@@ -2,6 +2,7 @@
 # from mylib.logic import get_activity_by_type
 # from mylib.logic import get_activity_by_price
 
+
 # these are the import statements for the testing of the logic.py
 
 # def test_f1():

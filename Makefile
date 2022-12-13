@@ -7,10 +7,10 @@ format:
 
 lint:
 	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py dblib
-	pylint --disable=R,C *.py 00_Source_Data/*.py 10_Code/*.py
+	pylint --disable=R,C *.py Source_Data_00/*.py Code_10/*.py
 
 test:
-	# python -m pytest -vv --cov=10_Code --cov=main test_*.py
+	# python -m pytest -vv --cov=Code_10 --cov=main test_*.py
 
 build:
  	#build container
@@ -18,13 +18,13 @@ build:
 
 run:
 	#run docker
-	# docker run -p 127.0.0.1:8080:8080 6b246acc760c
+	docker run -p 127.0.0.1:8080:8080 562f180f4c23
 
 deploy:
  	#deploy
-	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 667719398048.dkr.ecr.us-east-1.amazonaws.com
-	docker build -t globaltemperatures .
-	docker tag globaltemperatures:latest 667719398048.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures:latest
-	docker push 667719398048.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures:latest
-
-all: install format lint #deploy test 
+	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 450825970415.dkr.ecr.us-east-1.amazonaws.com
+	docker build -t globaltemperatures706 .
+	docker tag globaltemperatures706:latest 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
+	docker push 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
+	
+all: install format lint #deploy test

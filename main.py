@@ -4,16 +4,34 @@ import uvicorn
 # from mylib.logic import function_1
 # from mylib.logic import function_2
 # from mylib.logic import function_3
+from Code_10.logic import hello_world
 
 app = FastAPI()
 
+
+
+
+
+
+
+
+
 # Here, I pasted my overall structure of project 4 that is relevant to this project.
 
-# @app.get("/")
-# async def root():
-#     return {
-#         "message": "Message to write here soon."
-#     }
+@app.get("/")
+async def root():
+    return {
+        "message": "Message to write here soon. 706 ESEP TEAM ASSEMBLE!!!..."
+    }
+
+
+@app.get("/hello/{value}")
+async def types(value: str):
+    """Prints hello world"""
+
+    result = hello_world(value)
+
+    return {"result": result}
 
 
 # @app.get("/types/{value}")
