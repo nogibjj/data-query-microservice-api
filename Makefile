@@ -22,9 +22,9 @@ run:
 
 deploy:
  	#deploy
-	# aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 667719398048.dkr.ecr.us-east-1.amazonaws.com
-	# docker build -t name_of_app .
-	# docker tag name_of_app:latest 667719398048.dkr.ecr.us-east-1.amazonaws.com/name_of_app:latest
-	# docker push 667719398048.dkr.ecr.us-east-1.amazonaws.com/name_of_app:latest
+	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 667719398048.dkr.ecr.us-east-1.amazonaws.com
+	docker build -t globaltemperatures .
+	docker tag globaltemperatures:latest 667719398048.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures:latest
+	docker push 667719398048.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures:latest
 
-all: install format lint #test deploy
+all: install format lint #deploy test 

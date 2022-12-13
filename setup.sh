@@ -12,6 +12,6 @@ rm awscliv2.zip
 make install
 wget -O pgfutter https://github.com/lukasmartinelli/pgfutter/releases/download/v1.2/pgfutter_linux_amd64
 chmod +x pgfutter
-echo "hi"
+mv pgfutter 00_Source_Data/pgfutter
 
 exit 1
