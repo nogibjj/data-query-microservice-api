@@ -4,8 +4,8 @@ import uvicorn
 # from mylib.logic import function_1
 # from mylib.logic import function_2
 # from mylib.logic import function_3
-from Code_10.logic import hello_world
-from Code_10.logic import ESEP_fun_facts
+from main.logic import hello_world
+from main.logic import ESEP_fun_facts
 
 app = FastAPI()
 
