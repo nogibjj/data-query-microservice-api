@@ -60,3 +60,6 @@ pandas
 numpy
 matplotlib
 psycopg2-binary
+flask-restful
+flask
+streamlit
