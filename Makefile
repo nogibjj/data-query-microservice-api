@@ -3,11 +3,11 @@ install:
 		pip install -r requirements.txt
 
 format:	
-	black *.py 10_Code/*py 
+	black *.py
 
 lint:
 	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py dblib
-	pylint --disable=R,C *.py Source_Data_00/*.py Code_10/*.py
+	# pylint --disable=R,C *.py Source_Data_00/*.py
 
 test:
 	# python -m pytest -vv --cov=Code_10 --cov=main test_*.py
@@ -27,4 +27,4 @@ deploy:
 	docker tag globaltemperatures706:latest 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
 	docker push 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
 	
-all: install format lint #deploy test
+all: install format #lint deploy test
