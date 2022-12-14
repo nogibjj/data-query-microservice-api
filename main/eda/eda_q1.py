@@ -74,12 +74,14 @@ def get_init_temp(country):
     df_country['year'] = df_country['dt'].str[:4].astype(int)
     df_country['month'] = df_country['dt'].str[5:7].astype(int)
     df_country['averagetemperature'] = df_country['averagetemperature'].astype(float)
-    initial = df_country.loc[0, 'averagetemperature']
+    initial = str(df_country.loc[0, 'averagetemperature'])
     initial_month = str(df_country.loc[0, 'year']) + '-' + str(df_country.loc[0, 'month'])
-    recent = df_country.iloc[-1]['averagetemperature']
+    recent = str(df_country.iloc[-1]['averagetemperature'])
     recent_month = str(df_country.iloc[-1]['year']) + '-' + str(df_country.iloc[-1]['month'])
 
-    return initial, initial_month, recent, recent_month
+    resp = f"The temperature on {initial_month} was {initial} and on {recent_month} was {recent}."
+
+    return resp
 
 def main():
 

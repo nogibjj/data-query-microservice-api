@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Response
+import json
 import sys
 import os
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
@@ -28,6 +29,6 @@ def get_city_year_temp(country: str, year:str):
 
 @app.get("/init/{country}")
 def get_init_temp(country: str):
-    # result = eda.get_init_temp(str(country))
-    result = [1, 2, 3, 4]
-    return Response(content=result, media_type="application/json")
+    result = eda.get_init_temp(str(country))
+    res = {"data":result}
+    return Response(content=json.dumps(res), media_type="application/json")
