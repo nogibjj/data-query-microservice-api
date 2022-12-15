@@ -4,3 +4,6 @@
 
 This is a repository for continuous delivery of containerized microservice which performs a query using SQL and returns useful information to the user.
 
+<img width="784" alt="image" src="https://user-images.githubusercontent.com/112578065/207986486-372d8d2d-92ea-46f9-ad75-f0ca8d5c4623.png">
+
+
