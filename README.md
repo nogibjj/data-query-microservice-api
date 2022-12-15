@@ -13,30 +13,30 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 ## Contents
 
 1. Creation of Database
-  a. Kaggle API to get data
-  b. AWS RDS
+- Kaggle API to get data
+- AWS RDS
   
 2. EDA Implementation
-  a. Exploring useful information
-  b. Drawing plots
+- Exploring useful information
+- Drawing plots
 
 3. Continuous Integration
-  a. GitHub Actions
-  b. Test logic
+- GitHub Actions
+- Test logic
 
 4. Fast API
-  a. Wrapping all the functions
-  b. Swagger documentation
+- Wrapping all the functions
+- Swagger documentation
 
 5. Continuous Delivery: Deployment
-  a. Docker image
-  b. ECR
-  c. Code Build
-  d. App Runner
+- Docker image
+- ECR
+- Code Build
+- App Runner
   
 6. Streamlit
-  a. Hosting our APIs
-  b. Showing users our end result
+- Hosting our APIs
+- Showing users our end result
 
 ## Expected Output
 
