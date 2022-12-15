@@ -12,23 +12,28 @@ app = FastAPI()
 def root():
     return {"message": "Hello World"}
 
+@app.get("/countries")
+def get_countries_list():
+    countries = eda.get_countries_list()
+    countries.sort()
+    return Response(content=json.dumps({"result": countries}), media_type="application/json")
+
 @app.get("/trend/{country}")
 def get_country_plot(country: str):
-    eda.get_country_plot(str(country))
-    return {"result": str(country)}
+    df_json = eda.get_country_plot(str(country))
+    return Response(content=json.dumps({"result":df_json}), media_type="application/json")
 
 @app.get("/year/{country}/{year}")
 def get_country_year_temp(country: str, year: str):
     result = eda.get_country_year_temp(str(country), str(year))
-    return {"result": str(result)}
+    return Response(content=json.dumps({"result": str(result)}), media_type="application/json")
 
 @app.get("/city/{country}/{year}")
 def get_city_year_temp(country: str, year:str):
     result = eda.get_city_year_temp(str(country), str(year))
-    return {"result": str(result)}
+    return Response(content=json.dumps({"result": str(result)}), media_type="application/json")
 
-@app.get("/init/{country}")
+@app.get("/prediction/{country}")
 def get_init_temp(country: str):
-    result = eda.get_init_temp(str(country))
-    res = {"data":result}
-    return Response(content=json.dumps(res), media_type="application/json")
+    df_json = eda.get_future_temp(str(country))
+    return Response(content=json.dumps({"result":df_json}), media_type="application/json")
