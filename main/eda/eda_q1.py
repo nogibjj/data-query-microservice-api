@@ -33,8 +33,8 @@ def get_countries_list():
     for row in cursor.fetchall():
         countries.append(row[0])
 
+    cursor.close() 
     connection.close()
-    cursor.close()
 
     return countries
 
@@ -77,8 +77,8 @@ def get_country_year_temp(country, year):
 
     result = f"In {country}, during {year}, the maximum temperature was {str(max_temp)} and the minimum temperature was {str(min_temp)}."
 
+    cursor.close() 
     connection.close()
-    cursor.close()
 
     return result
 
@@ -94,8 +94,8 @@ def get_city_year_temp(country, year):
     country_data = cursor.fetchall()
     df_country = cleaner(country_data, cursor)
 
+    cursor.close() 
     connection.close()
-    cursor.close()
 
     if df_country.empty:
         return "Data does not exist."
@@ -125,8 +125,8 @@ def get_future_temp(country):
     df_country = cleaner(country_data, cursor)
     time_series = df_country.groupby("year")["averagetemperature"].mean().reset_index()
 
+    cursor.close() 
     connection.close()
-    cursor.close()
 
     return time_series.to_json()
 
