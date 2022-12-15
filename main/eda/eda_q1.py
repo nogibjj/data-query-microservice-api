@@ -27,6 +27,14 @@ def cleaner(sql_payload):
 
     return df_clean
 
+def get_countries_list():
+
+    countries = list()
+    cursor.execute(f"select distinct(country) from import.globaltemperaturesbycountry;")
+    for row in cursor.fetchall():
+        countries.append(row[0])
+
+    return countries
 
 # Question 1: For a given country, what is the trend of their average temperature?
 def get_country_plot(country):
@@ -40,16 +48,14 @@ def get_country_plot(country):
         "averagetemperature"
     ].transform("mean")
 
-    return df_country.drop_duplicates(subset=["year"], keep="first").plot(
-        x="year",
-        y="temperature",
-        kind="line",
-        title="Average Temperature of " + country + " (by year)",
-    )
+    df_country_copy = df_country.copy()
+    df_country_copy = df_country_copy.drop_duplicates(subset=["year"], keep="first")
 
+    return df_country_copy.to_json()
 
 # Question 2: For a given year and a given country, what is the max/min temperature?
 # TODO: Do the max and min in sql
+# TODO: If the year is not found it should not give an error
 def get_country_year_temp(country, year):
     cursor.execute(
         f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}' and dt like '%{year}%';"
@@ -59,60 +65,72 @@ def get_country_year_temp(country, year):
     max_temp = df_country["averagetemperature"].max()
     min_temp = df_country["averagetemperature"].min()
     mean_temp = df_country["averagetemperature"].mean()
-    return max_temp, min_temp, mean_temp
+
+    result = f"In {country}, during {year}, the maximum temperature was {str(max_temp)} and the minimum temperature was {str(min_temp)}."
+
+    return result
 
 
 # Question 3: For a given year, which city has the highest/lowest temperature on average in a given country?
-# TODO: Try the groupby in sql
+# TODO: Try just city here so it's not just major cities
 def get_city_year_temp(country, year):
     cursor.execute(
-        f"SELECT city FROM import.globaltemperaturesbymajorcity where country = '{country}' and dt like '%{year}%';"
+        f"SELECT * FROM import.globaltemperaturesbymajorcity where country = '{country}' and dt like '%{year}%';"
     )
     country_data = cursor.fetchall()
     df_country = cleaner(country_data)
-    df_country["temperature"] = df_country.groupby(["year", "city"])[
-        "averagetemperature"
-    ].transform("mean")
-    highest = df_country.sort_values(by=["temperature"], ascending=False).head(1)
-    lowest = df_country.sort_values(by=["temperature"], ascending=True).head(1)
-    highest_city = highest["city"].values[0]
-    lowest_city = lowest["city"].values[0]
-    return highest_city, lowest_city
+
+    if df_country.empty:
+        return "Data does not exist."
+
+    else:
+        df_country["temperature"] = df_country.groupby(["year", "city"])[
+            "averagetemperature"
+        ].transform("mean")
+        highest = df_country.sort_values(by=["temperature"], ascending=False).head(1)
+        lowest = df_country.sort_values(by=["temperature"], ascending=True).head(1)
+        highest_city = highest["city"].values[0]
+        lowest_city = lowest["city"].values[0]
+
+        result = f"In {country}, during {year}, the city with the highest recorded temperature was {highest_city}. The city with the lowest recorded temperature was {lowest_city}."
+
+        return result
 
 
 # Question 4: For a given country, what is the future trend of their average temperature?
-# TODO: Try prediction
-
-
 def get_future_temp(country):
     cursor.execute(
         f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}';"
     )
     country_data = cursor.fetchall()
     df_country = cleaner(country_data)
-    time_series = df_country.groupby("year")["averagetemperature"].mean()
-    len = time_series.shape[0]
-    time_series.index = pd.period_range(
-        start=np.min(time_series.index), periods=len, freq="Y"
-    )
-    endog = time_series
-    mod = sm.tsa.statespace.SARIMAX(
-        endog, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12)
-    )
-    res = mod.fit()
-    fig, ax = plt.subplots(figsize=(12, 8))
-    plt.title("Temperature Forecast until 2050")
-    endog.loc["1824":].plot(ax=ax)
-    fcast = res.get_forecast("2050").summary_frame()
-    fcast["mean"].plot(ax=ax, style="k--", label="Forecast")
-    ax.fill_between(
-        fcast.index,
-        fcast["mean_ci_lower"],
-        fcast["mean_ci_upper"],
-        color="k",
-        alpha=0.1,
-    )
-    return plt.show(block=True)
+    time_series = df_country.groupby("year")["averagetemperature"].mean().reset_index()
+    print(time_series)
+
+    return time_series.to_json()
+
+    # len = time_series.shape[0]
+    # time_series.index = pd.period_range(
+    #     start=np.min(time_series.index), periods=len, freq="Y"
+    # )
+    # endog = time_series
+    # mod = sm.tsa.statespace.SARIMAX(
+    #     endog, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12)
+    # )
+    # res = mod.fit()
+    # fig, ax = plt.subplots(figsize=(12, 8))
+    # plt.title("Temperature Forecast until 2050")
+    # endog.loc["1824":].plot(ax=ax)
+    # fcast = res.get_forecast("2050").summary_frame()
+    # fcast["mean"].plot(ax=ax, style="k--", label="Forecast")
+    # ax.fill_between(
+    #     fcast.index,
+    #     fcast["mean_ci_lower"],
+    #     fcast["mean_ci_upper"],
+    #     color="k",
+    #     alpha=0.1,
+    # )
+    # return plt.show(block=True)
 
 
 def main():
