@@ -16,16 +16,16 @@ st.title("Analysis of Global Temperatures from 1750 to 2015")
 
 # QUESTION 1
 st.header("Question 1: For a given country, what is the trend of their average temperature?")
-country = st.selectbox("Select a country / region:", countries, index=0)
-print("selected country question 1: ", country)
-q1_response = requests.get(url=f'{host}/trend/{country}').json()["result"]
+q1_country = st.selectbox("Select a country / region:", countries, index=0)
+print("selected country question 1: ", q1_country)
+q1_response = requests.get(url=f'{host}/trend/{q1_country}').json()["result"]
 q1_df = pd.read_json(str(q1_response))
 q1_lines = (
-        alt.Chart(q1_df, title="Evolution of stock prices")
+        alt.Chart(q1_df, title=f"Trend of average temperature of {q1_country}")
         .mark_line()
         .encode(
-            x="year",
-            y="temperature",
+            alt.X("year",scale=alt.Scale(domain=(1750, 2015)),axis=alt.Axis( title='Year')),
+            alt.Y('temperature',scale=alt.Scale(zero=False),axis=alt.Axis( title='Temperature in Celsius'))
         )
     )
 st.altair_chart(
@@ -69,7 +69,7 @@ mod = sm.tsa.statespace.SARIMAX(
 )
 res = mod.fit()
 fig, ax = plt.subplots(figsize=(12, 8))
-plt.title("Temperature Forecast until 2050")
+plt.title("Temperature Forecast until 2050 for {q4_country}")
 endog.loc["1824":].plot(ax=ax)
 fcast = res.get_forecast("2050").summary_frame()
 fcast["mean"].plot(ax=ax, style="k--", label="Forecast")

@@ -14,4 +14,4 @@ def connect_to_db():
         database="globaltemperatures",
     )
     cursor = connection.cursor()
-    return cursor
+    return connection, cursor
