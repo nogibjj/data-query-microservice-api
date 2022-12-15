@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
+import statsmodels.api as sm
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
@@ -79,41 +80,50 @@ def get_city_year_temp(country, year):
     return highest_city, lowest_city
 
 
-# Question 4: For a given country, what is the initial and the most recent temperature?
-# TODO: Get the first date and last date in sql
-def get_init_temp(country):
+# Question 4: For a given country, what is the future trend of their average temperature?
+# TODO: Try prediction
+
+
+def get_country_plot_future(time_series_data):
+    """Return plot of future temperature forecast for a given country"""
+    time_series_data.index = pd.period_range("1824", "2013", freq="Y")
+    endog = time_series_data
+    mod = sm.tsa.statespace.SARIMAX(
+        endog, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12)
+    )
+    res = mod.fit()
+    fig, ax = plt.subplots(figsize=(12, 8))
+    plt.title("Temperature Forecast until 2050")
+    endog.loc["1824":].plot(ax=ax)
+    fcast = res.get_forecast("2050").summary_frame()
+    fcast["mean"].plot(ax=ax, style="k--", label="Forecast")
+    ax.fill_between(
+        fcast.index,
+        fcast["mean_ci_lower"],
+        fcast["mean_ci_upper"],
+        color="k",
+        alpha=0.1,
+    )
+    pass
+
+
+def get_future_temp(country):
     cursor.execute(
         f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}';"
     )
     country_data = cursor.fetchall()
-    df_country = pd.DataFrame(
-        country_data, columns=[desc[0] for desc in cursor.description]
-    )
-    df_country = df_country.sort_values(by=["dt"], ascending=True)
-    df_country = df_country.replace(to_replace="", value=np.nan, regex=True)
-    df_country = df_country.dropna()
-    df_country["year"] = df_country["dt"].str[:4].astype(int)
-    df_country["month"] = df_country["dt"].str[5:7].astype(int)
-    df_country["averagetemperature"] = df_country["averagetemperature"].astype(float)
-    initial = str(df_country.loc[0, "averagetemperature"])
-    initial_month = (
-        str(df_country.loc[0, "year"]) + "-" + str(df_country.loc[0, "month"])
-    )
-    recent = str(df_country.iloc[-1]["averagetemperature"])
-    recent_month = (
-        str(df_country.iloc[-1]["year"]) + "-" + str(df_country.iloc[-1]["month"])
-    )
-
-    resp = f"The temperature on {initial_month} was {initial} and on {recent_month} was {recent}."
-
-    return resp
+    df_country = cleaner(country_data)
+    time_series = df_country.groupby("year")["averagetemperature"].mean()
+    get_country_plot_future(time_series)
+    return plt.show(block=True)
 
 
 def main():
 
     # get_country_plot("Europe")
-    temps = get_init_temp("Afghanistan")
-    print(temps)
+    # temps = get_init_temp("Afghanistan")
+    # print(temps)
+    get_future_temp("Afghanistan")
 
 
 if __name__ == "__main__":
