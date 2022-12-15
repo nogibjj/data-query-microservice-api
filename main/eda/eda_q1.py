@@ -84,10 +84,17 @@ def get_city_year_temp(country, year):
 # TODO: Try prediction
 
 
-def get_country_plot_future(time_series_data):
-    """Return plot of future temperature forecast for a given country"""
-    time_series_data.index = pd.period_range("1824", "2013", freq="Y")
-    endog = time_series_data
+def get_future_temp(country):
+    cursor.execute(
+        f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}';"
+    )
+    country_data = cursor.fetchall()
+    df_country = cleaner(country_data)
+    time_series = df_country.groupby("year")["averagetemperature"].mean()
+    time_series.index = pd.period_range(
+        df_country["year"].min, df_country["year"].max, freq="Y"
+    )
+    endog = time_series
     mod = sm.tsa.statespace.SARIMAX(
         endog, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12)
     )
@@ -104,17 +111,6 @@ def get_country_plot_future(time_series_data):
         color="k",
         alpha=0.1,
     )
-    pass
-
-
-def get_future_temp(country):
-    cursor.execute(
-        f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}';"
-    )
-    country_data = cursor.fetchall()
-    df_country = cleaner(country_data)
-    time_series = df_country.groupby("year")["averagetemperature"].mean()
-    get_country_plot_future(time_series)
     return plt.show(block=True)
 
 
