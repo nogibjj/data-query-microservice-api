@@ -91,7 +91,10 @@ def get_future_temp(country):
     country_data = cursor.fetchall()
     df_country = cleaner(country_data)
     time_series = df_country.groupby("year")["averagetemperature"].mean()
-    time_series.index = pd.period_range(df_country["year"].min, df_country["year"].max, freq="Y")
+    len = time_series.shape[0]
+    time_series.index = pd.period_range(
+        start=np.min(time_series.index), periods=len, freq="Y"
+    )
     endog = time_series
     mod = sm.tsa.statespace.SARIMAX(
         endog, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12)
@@ -114,10 +117,7 @@ def get_future_temp(country):
 
 def main():
 
-    # get_country_plot("Europe")
-    # temps = get_init_temp("Afghanistan")
-    # print(temps)
-    get_future_temp("Afghanistan")
+    get_future_temp("Thailand")
 
 
 if __name__ == "__main__":
