@@ -10,10 +10,12 @@ This is a repository for continuous delivery of containerized microservice which
 
 ## Contents
 
+## Expected Output
+
 ## Dataset
 
 The global temperature data used in this project was sourced from Kaggle, but it was originally provided by the Berkeley Earth, which is affiliated with Lawrence Berkeley National Laboratory. The Berkeley Earth Surface Temperature Study combines 1.6 billion temperature reports from 16 pre-existing archives. It is nicely packaged and allows for slicing into interesting subsets (for example by country). They publish the source data and the code for the transformations they applied.
 
 (Reference: https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalLandTemperaturesByCountry.csv)
 
-## Expected Output
+
