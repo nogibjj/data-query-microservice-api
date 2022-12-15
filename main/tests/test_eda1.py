@@ -8,17 +8,13 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir
 sys.path.append(PROJECT_ROOT)
 
 import helpers
+
+from eda.eda_q1 import get_countries_list
 from eda.eda_q1 import get_country_plot
-# from eda.eda_q1 import cleaner
 from eda.eda_q1 import get_country_year_temp
-
-
-cursor = helpers.connect_to_db()
-
-
-# these are the import statements for the testing of the logic.py
-
-# def test_f1():
+from eda.eda_q1 import get_city_year_temp
+from eda.eda_q1 import get_future_temp
+# from eda.eda_q1 import cleaner
 
 
 def test_get_country_plot():
