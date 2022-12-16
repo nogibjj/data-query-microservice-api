@@ -48,3 +48,8 @@ def get_last_decade_temp():
 def get_last_century_temp():
     df_json = eda2.global_temperatures_century()
     return Response(content=json.dumps({"result":df_json}), media_type="application/json")
+
+@app.get("/seasons")
+def get_top5_seasons_temp():
+    seasons_df_list = eda2.get_temperatures_top5()
+    return Response(content=json.dumps({"result":seasons_df_list}), media_type="application/json")
