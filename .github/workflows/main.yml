@@ -4,9 +4,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: test build-Build and run dev container task
-      uses: devcontainers/ci@v0.2
-      with:
-        runCmd: |
+      - uses: actions/checkout@v2
+      - name: test build-Build and run dev container task
+        uses: devcontainers/ci@v0.2
+        with:
+      - name: Install dependencies
+        run: |
+          make install
+      - name: Format
+        run: |
+          make format
+      - name: Linting
+        run: |
           make lint
+      - name: Testing
+        run: |
+          make test
