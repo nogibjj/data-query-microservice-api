@@ -12,25 +12,24 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 
 ## Contents
 
-### Creation of Database
-- Kaggle API to get data
-- AWS RDS
+### 1. Creation of Database using Kaggle API and AWS RDS
+<img width="681" alt="image" src="https://user-images.githubusercontent.com/112578065/207996669-9f0f8e06-d0f2-4e19-8d59-d2973eb2c34b.png">
 
-### EDA Implementation
+### 2. EDA Implementation
 - Exploring useful information
 - Drawing plots
 
-### Continuous Integration
+### 3. Continuous Integration
 A makefile, a requirements file, and the test files were created. They were all run by github actions as a measure of continuous integration. 
 
-### Generating FastAPI
+### 4. Generating FastAPI
 - Wrapping all the functions
 - Swagger documentation
 
-### Continuous Delivery
+### 5. Continuous Delivery
 A docker image was built to containerize the app. Then it was sent to an AWS ECR repository. From there, it gets built through AWS Code Build. It is important to also flag that the AWS account's owner must add the AmazonEC2ContainerRegistryFullAccess to the permissions under the policy that manipulates or oversees that repository. Otherwise, the build won't complete. Once built, the app is deployed through AWS AppRunner, and it becomes immediately available to anyone. Something else that affects the permissions is creating a codebuild with elevated build privileges, a good way to avoid the "are the docker daemons running" error.
 
-### Streamlit
+### 6. Streamlit
 - Hosting APIs
 - Showing users end result
 
