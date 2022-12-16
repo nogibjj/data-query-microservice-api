@@ -6,7 +6,7 @@ format:
 	black *.py
 
 lint:
-	pylint --disable=R,C --ignore-patterns=__*__.py --disable-ids=W0511,E1101 *.py main/app/*.py main/data/*.py main/eda/*.py main/fastapi-apis/*.py main/helpers/*.py main/tests/*.py
+	pylint --disable=R,C --ignore-patterns=__*__.py --disable=W0511,E1101 *.py main/app/*.py main/data/*.py main/eda/*.py main/fastapi-apis/*.py main/helpers/*.py main/tests/*.py
 
 test:
 	# python -m pytest -vv --cov=Code_10 --cov=main test_*.py
