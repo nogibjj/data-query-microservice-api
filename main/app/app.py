@@ -7,9 +7,10 @@ import statsmodels.api as sm
 import numpy as np
 import matplotlib.pyplot as plt
 
-# https://wx3ucb3jpz.us-east-1.awsapprunner.com/
-host = "http://127.0.0.1:8000"
+host = "https://wx3ucb3jpz.us-east-1.awsapprunner.com"
+# host = "http://127.0.0.1:8000"
 
+print(requests.get(url=f'{host}/countries').json())
 countries = requests.get(url=f'{host}/countries').json()["result"]
 
 st.title("Analysis of Global Temperatures from 1750 to 2015")
