@@ -49,35 +49,98 @@ q3_year = st.selectbox("Select a year:", list(range(1750, 2016)), index=0, key="
 print("selected country question 3: ", q3_country)
 print("selected year question 3: ", q3_year)
 q3_response = requests.get(url=f'{host}/city/{q3_country}/{q3_year}')
+print(q3_response.json())
 st.write(q3_response.json()["result"])
 
 # QUESTION 4
-st.header("Question 4: For a given country, what is the future trend of their average temperature?")
-q4_country = st.selectbox("Select a country / region:", countries, index=0, key="q4_country")
-print("selected country question 4: ", q4_country)
-q4_response = requests.get(url=f'{host}/prediction/{q4_country}').json()["result"]
-print(q4_response)
-q4_df = pd.read_json(str(q4_response))
+# st.header("Question 4: For a given country, what is the future trend of their average temperature?")
+# q4_country = st.selectbox("Select a country / region:", countries, index=0, key="q4_country")
+# print("selected country question 4: ", q4_country)
+# q4_response = requests.get(url=f'{host}/prediction/{q4_country}').json()["result"]
+# print(q4_response)
+# q4_df = pd.read_json(str(q4_response))
 
-len = q4_df.shape[0]
-q4_df.index = pd.period_range(
-    start=np.min(q4_df["year"]), periods=len, freq="Y"
+# len = q4_df.shape[0]
+# q4_df.index = pd.period_range(
+#     start=np.min(q4_df["year"]), periods=len, freq="Y"
+# )
+# endog = q4_df["averagetemperature"]
+# mod = sm.tsa.statespace.SARIMAX(
+#     endog, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12)
+# )
+# res = mod.fit()
+# fig, ax = plt.subplots(figsize=(12, 8))
+# plt.title("Temperature Forecast until 2050 for {q4_country}")
+# endog.loc["1824":].plot(ax=ax)
+# fcast = res.get_forecast("2050").summary_frame()
+# fcast["mean"].plot(ax=ax, style="k--", label="Forecast")
+# ax.fill_between(
+#     fcast.index,
+#     fcast["mean_ci_lower"],
+#     fcast["mean_ci_upper"],
+#     color="k",
+#     alpha=0.1,
+# )
+# st.pyplot(fig)
+
+# QUESTION 5 - Decade
+# TODO: Get year for x-axis
+st.header("Question 5: For a given country, what is the trend of their average temperature?")
+q5_response = requests.get(url=f'{host}/decade').json()["result"]
+q5_df = pd.read_json(str(q5_response))
+q5_lines = (
+        alt.Chart(q5_df, title=f"Trend of average temperature")
+        .mark_line()
+        .encode(
+            alt.X("dt",axis=alt.Axis( title='Year')),
+            alt.Y('movingaverage',scale=alt.Scale(zero=False),axis=alt.Axis( title='Temperature in Celsius'))
+        )
+    )
+st.altair_chart(
+    (q5_lines).interactive(),
+    use_container_width=True
 )
-endog = q4_df["averagetemperature"]
-mod = sm.tsa.statespace.SARIMAX(
-    endog, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12)
+
+# QUESTION 6
+st.header("Question 6: For a given country, what is the trend of their average temperature?")
+q6_response = requests.get(url=f'{host}/century').json()["result"]
+q6_df = pd.read_json(str(q6_response))
+q6_df = q6_df.reset_index()
+print(q6_df.dtypes)
+q6_lines = (
+        alt.Chart(q6_df, title=f"Trend of average temperature")
+        .mark_line()
+        .encode(
+            alt.X('index',axis=alt.Axis( title='Year')),
+            alt.Y('landaveragetemperature',scale=alt.Scale(zero=False),axis=alt.Axis( title='Temperature in Celsius'))
+        )
+    )
+st.altair_chart(
+    (q6_lines).interactive(),
+    use_container_width=True
 )
-res = mod.fit()
-fig, ax = plt.subplots(figsize=(12, 8))
-plt.title("Temperature Forecast until 2050 for {q4_country}")
-endog.loc["1824":].plot(ax=ax)
-fcast = res.get_forecast("2050").summary_frame()
-fcast["mean"].plot(ax=ax, style="k--", label="Forecast")
-ax.fill_between(
-    fcast.index,
-    fcast["mean_ci_lower"],
-    fcast["mean_ci_upper"],
-    color="k",
-    alpha=0.1,
+
+# QUESTION 7
+st.header("Question 7: For a given country, what is the trend of their average temperature?")
+q7_response = requests.get(url=f'{host}/seasons').json()["result"]
+
+seasons = ["winter", "spring", "summer", "autumn", "monsoon", "fall"]
+def create_chart(df, season):
+    chart = alt.Chart(df).mark_line().encode(
+        x=alt.X('year', title='Year'),
+        y=alt.Y('averagetemperature', scale=alt.Scale(zero=False), title='Temperature (Celsius)'),
+        color=alt.Color('country', title='Country'),
+        tooltip=['year', 'averagetemperature', 'country']
+    ).properties(
+        width=600,
+        height=300,
+        title=season)
+
+    st.altair_chart(
+    (chart).interactive(),
+    use_container_width=True
 )
-st.pyplot(fig)
+
+for i in range(len(q7_response)):
+    season_df = pd.read_json(str(q7_response[i]))
+    create_chart(season_df, seasons[i])

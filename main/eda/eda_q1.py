@@ -9,7 +9,6 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir
 sys.path.append(PROJECT_ROOT)
 import helpers
 
-
 def cleaner(sql_payload, cursor):
 
     """Cleaning essential columns for plotting and return statements"""
@@ -19,7 +18,22 @@ def cleaner(sql_payload, cursor):
     )
     df_clean = df_clean.sort_values(by=["dt"], ascending=True)
     df_clean = df_clean.replace(to_replace="", value=np.nan, regex=True)
-    df_clean["season"] = df["season"].fillna("no season assigned by ESEP")
+    df_clean["season"] = df_clean["season"].fillna("no season assigned by ESEP")
+    df_clean = df_clean.dropna()
+    df_clean["year"] = df_clean["dt"].str[:4].astype(int)
+    df_clean["averagetemperature"] = df_clean["averagetemperature"].astype(float)
+
+    return df_clean
+
+def cleaner_without_season(sql_payload, cursor):
+
+    """Cleaning essential columns for plotting and return statements"""
+
+    df_clean = pd.DataFrame(
+        sql_payload, columns=[desc[0] for desc in cursor.description]
+    )
+    df_clean = df_clean.sort_values(by=["dt"], ascending=True)
+    df_clean = df_clean.replace(to_replace="", value=np.nan, regex=True)
     df_clean = df_clean.dropna()
     df_clean["year"] = df_clean["dt"].str[:4].astype(int)
     df_clean["averagetemperature"] = df_clean["averagetemperature"].astype(float)
@@ -123,7 +137,7 @@ def get_city_year_temp(country, year, test=False):
         f"SELECT * FROM import.globaltemperaturesbymajorcity where country = '{country}' and dt like '%{year}%';"
     )
     country_data = cursor.fetchall()
-    df_country = cleaner(country_data, cursor)
+    df_country = cleaner_without_season(country_data, cursor)
 
     cursor.close()
     connection.close()
