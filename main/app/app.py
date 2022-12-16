@@ -25,7 +25,7 @@ with tab1:
     q6_df = pd.read_json(str(q6_response))
     q6_df = q6_df.reset_index()
     q6_lines = (
-            alt.Chart(q6_df, title=f"Average global land temperatures over the last century")
+            alt.Chart(q6_df, title="Average global land temperatures over the last century")
             .mark_line()
             .encode(
                 alt.X('index',axis=alt.Axis( title='Year')),
@@ -43,7 +43,7 @@ with tab1:
     q5_response = requests.get(url=f'{host}/decade').json()["result"]
     q5_df = pd.read_json(str(q5_response))
     q5_lines = (
-            alt.Chart(q5_df, title=f"Average global land temperatures over the last decade")
+            alt.Chart(q5_df, title="Average global land temperatures over the last decade")
             .mark_line()
             .encode(
                 alt.X("dt:T",axis=alt.Axis( title='Year')),

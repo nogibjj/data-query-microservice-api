@@ -8,7 +8,6 @@ import pandas as pd
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
-import helpers
 
 from eda.eda_q1 import get_countries_list
 from eda.eda_q1 import get_country_plot
@@ -28,8 +27,6 @@ def test_get_countries_list():
     countries = get_countries_list()
 
     assert len(countries) == 243
-
-    pass
 
 
 def test_get_country_plot():
@@ -65,8 +62,6 @@ def test_get_country_plot():
 
     assert "Hogwarts" in get_country_plot("Hogwarts")
 
-    pass
-
 
 def test_get_country_year_temp():
 
@@ -84,7 +79,7 @@ def test_get_country_year_temp():
 
     statement = get_country_year_temp("India", 2012)
 
-    metrics = re.findall("[0-9]{0,3}\.[0-9]+", statement)
+    metrics = re.findall(r"[0-9]{0,3}\.[0-9]+", statement)
 
     metrics = [float(i) for i in metrics]
 
@@ -103,8 +98,6 @@ def test_get_country_year_temp():
     assert type(get_country_year_temp("Uganda", "2022")) == str
 
     assert "Data does not exist" in get_country_year_temp("Uganda", "2022")
-
-    pass
 
 
 def test_get_city_year_temp():
@@ -158,8 +151,6 @@ def test_get_city_year_temp():
 
     assert "Data does not exist" in get_city_year_temp("Puerto Rico", "2022")
 
-    pass
-
 
 def test_get_future_temp():
 
@@ -176,8 +167,6 @@ def test_get_future_temp():
     assert type(get_future_temp("Castle Oblivion")) == str
 
     assert "Data Engineering" in get_future_temp("Data Engineering")
-
-    pass
 
 
 def test_global_temperatures_decade():
@@ -256,7 +245,6 @@ def test_get_temperatures_top5():
                     else:
                         assert c in df["country"].unique()
                         assert unique_seasons[0] == core_seasons[count]
-                pass
 
             else:
                 for c in group:
@@ -275,4 +263,4 @@ test_get_city_year_temp()
 test_get_future_temp()
 test_global_temperatures_decade()
 test_global_temperatures_century()
-test_get_temperatures_top5
+test_get_temperatures_top5()

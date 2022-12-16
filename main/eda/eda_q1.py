@@ -1,9 +1,7 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 import sys
-import statsmodels.api as sm
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
@@ -48,7 +46,7 @@ def get_countries_list():
     connection, cursor = helpers.connect_to_db()
 
     countries = list()
-    cursor.execute(f"select distinct(country) from import.globaltemperaturesbycountry;")
+    cursor.execute("select distinct(country) from import.globaltemperaturesbycountry;")
     for row in cursor.fetchall():
         countries.append(row[0])
 

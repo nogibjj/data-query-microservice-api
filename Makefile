@@ -6,13 +6,11 @@ format:
 	black *.py
 
 lint:
-	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py dblib
-	# pylint --disable=R,C *.py --cov=main Source_00/*.py
-	# Cursors trigger much of pylint, known issue.
-	pylint --disable=R,C --ignore-patterns=__*__.py *.py
+	pylint --disable=R,C --ignore-patterns=__*__.py *.py main/app/*.py main/data/*.py main/eda/*.py main/fastapi-apis/*.py main/helpers/*.py main/tests/*.py
 
 test:
 	# python -m pytest -vv --cov=Code_10 --cov=main test_*.py
+	python -m pytest -vv --cov=main main/tests/test_*.py
 
 build:
  	#build container
@@ -29,4 +27,4 @@ deploy:
 	docker tag globaltemperatures706:latest 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
 	docker push 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
 	
-all: install format #lint deploy test
+all: install format lint test #deploy
