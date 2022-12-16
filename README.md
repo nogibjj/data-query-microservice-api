@@ -28,35 +28,6 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 | 6. Streamlit | Hosting APIs |
 | | Showing users end result |
 
- 
-
-
-1. Creation of Database
-- Kaggle API to get data
-- AWS RDS
-  
-2. EDA Implementation
-- Exploring useful information
-- Drawing plots
-
-3. Continuous Integration
-- GitHub Actions
-- Test logic
-
-4. Fast API
-- Wrapping all the functions
-- Swagger documentation
-
-5. Continuous Delivery: Deployment
-- Docker image
-- ECR
-- Code Build
-- App Runner
-  
-6. Streamlit
-- Hosting our APIs
-- Showing users our end result
-
 ## Expected Output
 
 ## Dataset
