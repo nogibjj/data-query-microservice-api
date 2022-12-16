@@ -3,6 +3,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: AWS
     steps:
       - uses: actions/checkout@v2
       - name: test build-Build and run dev container task
