@@ -14,7 +14,7 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 
 ### 1. Creation of Database
 (1) Kaggle API
-<img width="681" alt="image" src="https://user-images.githubusercontent.com/112578065/207996669-9f0f8e06-d0f2-4e19-8d59-d2973eb2c34b.png">
+![image](https://user-images.githubusercontent.com/112578065/207997214-98d54398-2417-4fe6-9452-9a253ec4960a.png)
 
 (2) AWS RDS
 ![image](https://user-images.githubusercontent.com/112578065/207997090-e6c0e5f4-7f98-44eb-a8dd-8b6733bd6925.png)
