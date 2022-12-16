@@ -20,8 +20,7 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 ![image](https://user-images.githubusercontent.com/112578065/207997090-e6c0e5f4-7f98-44eb-a8dd-8b6733bd6925.png)
 
 ### 2. EDA Implementation
-- Exploring useful information
-- Drawing plots
+![image](https://user-images.githubusercontent.com/112578065/207998382-1f47fc66-b2ba-43c0-bae0-aa9222823484.png)
 
 ### 3. Continuous Integration
 A makefile, a requirements file, and the test files were created. They were all run by github actions as a measure of continuous integration. 
