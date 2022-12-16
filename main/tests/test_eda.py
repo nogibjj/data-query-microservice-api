@@ -205,31 +205,67 @@ def test_get_temperatures_top5():
 
     top_5 = ["United States", "China", "Russia", "India", "Japan"]
 
+    bottom_3 = ["Cape Verde", "Grenada", "Puerto Rico"]
+
     core_seasons = ["winter", "spring", "summer", "autumn"]
 
     all_seasons_df = get_temperatures_top5()
 
-    winter_df, spring_df, summer_df, autumn_df = (
+    (
+        winter_df,
+        spring_df,
+        summer_df,
+        autumn_df,
+        winter_df2,
+        spring_df2,
+        summer_df2,
+        autumn_df2,
+    ) = (
         pd.read_json(all_seasons_df[0]),
         pd.read_json(all_seasons_df[1]),
         pd.read_json(all_seasons_df[2]),
         pd.read_json(all_seasons_df[3]),
+        pd.read_json(all_seasons_df[4]),
+        pd.read_json(all_seasons_df[5]),
+        pd.read_json(all_seasons_df[6]),
+        pd.read_json(all_seasons_df[7]),
     )
 
-    count = 0
+    top_5_df = [winter_df, spring_df, summer_df, autumn_df]
+    bottom_3_df = [winter_df2, spring_df2, summer_df2, autumn_df2]
 
-    for df in [winter_df, spring_df, summer_df, autumn_df]:
-        # print(df)
-        for c in top_5:
+    def country_season_verifier(group, their_df_list, bottom3=False):
 
-            assert c in df["country"].unique()
+        count = 0
 
-        assert 1915 in df["year"].unique()
-        assert 2013 in df["year"].unique()
-        unique_seasons = [i for i in df["season"].unique()]
-        assert len(unique_seasons) == 1
-        assert unique_seasons[0] == core_seasons[count]
-        count += 1
+        for df in their_df_list:
+            # print(df)
+            assert 1915 in df["year"].unique()
+            assert 2013 in df["year"].unique()
+            unique_seasons = [i for i in df["season"].unique()]
+            assert len(unique_seasons) == 1
+
+            if bottom3:
+
+                for c in group:
+
+                    if c != "Puerto Rico" and core_seasons[count] == "autumn":
+
+                        pass
+
+                    else:
+                        assert c in df["country"].unique()
+                        assert unique_seasons[0] == core_seasons[count]
+                pass
+
+            else:
+                for c in group:
+                    assert c in df["country"].unique()
+                assert unique_seasons[0] == core_seasons[count]
+            count += 1
+
+    country_season_verifier(top_5, top_5_df)
+    country_season_verifier(bottom_3, bottom_3_df, bottom3=True)
 
 
 test_get_countries_list()
@@ -239,4 +275,4 @@ test_get_city_year_temp()
 test_get_future_temp()
 test_global_temperatures_decade()
 test_global_temperatures_century()
-get_temperatures_top5
+test_get_temperatures_top5
