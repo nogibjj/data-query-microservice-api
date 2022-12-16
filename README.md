@@ -27,8 +27,8 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 A makefile, a requirements file, and the test files were created. They were all run by github actions as a measure of continuous integration. 
 
 ### 4. Generating FastAPI
-- Wrapping all the functions
-- Swagger documentation
+The python files in the main folder were wrapped under the FastAPI to generate a quick web application. 
+![image](https://user-images.githubusercontent.com/112578065/207997680-03051f21-5f5d-4923-a54a-a4cf4be0ae78.png)
 
 ### 5. Continuous Delivery
 A docker image was built to containerize the app. Then it was sent to an AWS ECR repository. From there, it gets built through AWS Code Build. It is important to also flag that the AWS account's owner must add the AmazonEC2ContainerRegistryFullAccess to the permissions under the policy that manipulates or oversees that repository. Otherwise, the build won't complete. Once built, the app is deployed through AWS AppRunner, and it becomes immediately available to anyone. Something else that affects the permissions is creating a codebuild with elevated build privileges, a good way to avoid the "are the docker daemons running" error.
