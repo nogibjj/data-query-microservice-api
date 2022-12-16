@@ -11,24 +11,22 @@ This is a repository for continuous delivery of containerized microservice which
 This group project was done as part of IDS706 Data Engineering class at Duke University. 
 
 ## Contents
-1. Creation of Database
-	 Kaggle API to get data
-	 AWS RDS
-2. EDA Implementation
-	 Exploring useful information
-	 Drawing plots
-3. Continuous Integration	 GitHub Actions
-	 Test logic
-4. Generating Fast API	 Wrapping all the functions
-	 Swagger documentation
-5. Continuous Delivery
-	 Docker image
-	 Elastic Container Registry (ECR)
-	 Code Build
-	 App Runner
-6. Streamlit
-	 Hosting our APIs
-	 Showing users end result
+| Workflow | Description |
+| --- | --- |
+| 1. Creation of Database | Kaggle API to get data |
+|  | AWS RDS |
+| 2. EDA Implementation | Exploring useful information |
+| | Drawing plots |
+| 3. Continuous Integration | GitHub Actions |
+| | Test logic |
+| 4. Generating FastAPI | Wrapping all the functions |
+|  | Swagger documentation |
+| 5. Continuous Delivery | Docker image |
+| | Elastic Container Registry (ECR) |
+| | Code Build |
+| | App Runner |
+| 6. Streamlit | Hosting APIs |
+| | Showing users end result |
 
  
 
