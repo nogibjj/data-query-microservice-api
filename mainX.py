@@ -1,13 +1,17 @@
 from fastapi import FastAPI, Response
 import uvicorn
 import json
-import sys
-import os
+
+# import sys
+# import os
 
 # PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 # sys.path.append(PROJECT_ROOT)
 import main.eda.eda_q1 as eda
 import main.eda.eda_q2 as eda2
+# import mainpackage.eda_fire_q1 as eda
+# import mainpackage.eda_fire_q2 as eda
+
 
 app = FastAPI()
 

@@ -7,7 +7,9 @@ format:
 
 lint:
 	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py dblib
-	# pylint --disable=R,C *.py --cov=main /*.py
+	# pylint --disable=R,C *.py --cov=main Source_00/*.py
+	# Cursors trigger much of pylint, known issue.
+	pylint --disable=R,C --ignore-patterns=__*__.py *.py
 
 test:
 	# python -m pytest -vv --cov=Code_10 --cov=main test_*.py
@@ -18,7 +20,7 @@ build:
 
 run:
 	#run docker
-	docker run -p 127.0.0.1:8080:8080 f3649fcd9f90
+	docker run -p 127.0.0.1:8080:8080 2d1505f9302f
 
 deploy:
  	#deploy
