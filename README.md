@@ -25,7 +25,7 @@ We used an api to scrape the dataset and a bash script to insert the rows in an 
 
 ### 2. EDA Implementation
 
-Our features are focused around doing Exploratory Data Analysis, based on user input. Here is a special EDA function showing temperature changes over seasons. 
+Our features are focused around doing Exploratory Data Analysis, based on user input. Here is a special EDA function showing seasonal, temperature increments over the past few years.
 
 ![image](https://user-images.githubusercontent.com/112578065/207998382-1f47fc66-b2ba-43c0-bae0-aa9222823484.png)
 
@@ -37,13 +37,15 @@ The python files in the main folder were wrapped under the FastAPI to generate a
 ![image](https://user-images.githubusercontent.com/112578065/207997680-03051f21-5f5d-4923-a54a-a4cf4be0ae78.png)
 
 ### 5. Continuous Delivery
-A docker image was built to containerize the app. Then it was sent to an AWS ECR repository. From there, it gets built through AWS Code Build. It is important to also flag that the AWS account's owner must add the AmazonEC2ContainerRegistryFullAccess to the permissions under the policy that manipulates or oversees that repository. Otherwise, the build won't complete. Once built, the app is deployed through AWS AppRunner, and it becomes immediately available to anyone. Something else that affects the permissions is creating a codebuild with elevated build privileges, a good way to avoid the "are the docker daemons running" error.
+A docker image was built to containerize the app. Then it was sent to an AWS ECR repository. From there, it gets built through AWS Code Build on a daily basis. It is important to also flag that the AWS account's owner must add the AmazonEC2ContainerRegistryFullAccess to the permissions under the policy that manipulates or oversees that repository. Otherwise, the build won't complete. Once built, the app is deployed through AWS AppRunner, and it becomes immediately available to anyone. Something else that affects the permissions is creating a codebuild with elevated build privileges, a good way to avoid the "are the docker daemons running" error.
 
 ### 6. Streamlit
-- Hosting APIs
-- Showing users end result
+
+We built a UI to make the experience of querying the data feel easier to the user. Thanks to this implementation, the page looks more like a common, interactive webpage. 
 
 ## Expected Output
+
+
 
 ## Dataset
 
