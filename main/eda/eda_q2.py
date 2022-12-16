@@ -50,7 +50,8 @@ def get_temperatures_top5():
     connection, cursor = helpers.connect_to_db()
 
     cursor.execute(
-        "SELECT * FROM import.globaltemperaturesbycountry where (date_part('year','2015-12-01'::date)-date_part('year',dt::date))<=100 and country in ('United States','China','Russia','India','Japan');"
+# temperatures by the top 5 and least polluters countries in the last century: Higest pollutors = United States, China, Russia, India, Japan and least polluters = Cape Verde, Grenada, Puerto Rico
+        "SELECT * FROM import.globaltemperaturesbycountry where (date_part('year','2015-12-01'::date)-date_part('year',dt::date))<=100 and country in ('United States','China','Russia','India','Japan','Cape Verde','Grenada','Puerto Rico');"
     )
 
     df = pd.DataFrame(cursor.fetchall(), columns=[x[0] for x in cursor.description])
