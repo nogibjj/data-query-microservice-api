@@ -8,18 +8,17 @@ import pandas as pd
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
-import helpers
 
-from eda.eda_q1 import get_countries_list
-from eda.eda_q1 import get_country_plot
-from eda.eda_q1 import get_country_year_temp
-from eda.eda_q1 import get_city_year_temp
-from eda.eda_q1 import get_future_temp
-from eda.eda_q2 import global_temperatures_decade
-from eda.eda_q2 import global_temperatures_century
-from eda.eda_q2 import get_temperatures_top5
+from eda_fire_q1 import get_countries_list
+from eda_fire_q1 import get_country_plot
+from eda_fire_q1 import get_country_year_temp
+from eda_fire_q1 import get_city_year_temp
+from eda_fire_q1 import get_future_temp
+from eda_fire_q2 import global_temperatures_decade
+from eda_fire_q2 import global_temperatures_century
+from eda_fire_q2 import get_temperatures_top5
 
-# from eda.eda_q1 import cleaner
+# from eda_fire_q1 import cleaner
 
 
 def test_get_countries_list():

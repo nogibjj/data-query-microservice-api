@@ -7,7 +7,7 @@ format:
 
 lint:
 	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py dblib
-	# pylint --disable=R,C *.py Source_Data_00/*.py
+	# pylint --disable=R,C *.py --cov=main /*.py
 
 test:
 	# python -m pytest -vv --cov=Code_10 --cov=main test_*.py

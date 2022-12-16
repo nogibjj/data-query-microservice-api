@@ -5,7 +5,11 @@
 # # sys.path.append(PROJECT_ROOT)
 import fire
 from eda_fire_q1 import get_city_year_temp
+from eda_fire_q1 import get_country_plot
 from eda_fire_q1 import get_countries_list
+from eda_fire_q1 import get_future_temp
+from eda_fire_q1 import get_country_year_temp
+
 
 if __name__ == "__main__":
     fire.Fire()
