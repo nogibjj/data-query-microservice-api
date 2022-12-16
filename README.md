@@ -45,7 +45,7 @@ We built a UI to make the experience of querying the data feel easier to the use
 
 ## Expected Output
 
-
+![image](https://user-images.githubusercontent.com/112578065/208130390-70802ae9-049f-4510-a6ed-6732976f26bb.png)
 
 ## Dataset
 
