@@ -9,6 +9,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir
 sys.path.append(PROJECT_ROOT)
 import helpers
 
+
 def cleaner(sql_payload, cursor):
 
     """Cleaning essential columns for plotting and return statements"""
@@ -24,6 +25,7 @@ def cleaner(sql_payload, cursor):
     df_clean["averagetemperature"] = df_clean["averagetemperature"].astype(float)
 
     return df_clean
+
 
 def cleaner_without_season(sql_payload, cursor):
 

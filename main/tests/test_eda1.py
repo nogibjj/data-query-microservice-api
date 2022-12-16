@@ -4,6 +4,7 @@
 import os
 import sys
 import re
+import pandas as pd
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
@@ -20,6 +21,7 @@ from eda.eda_q1 import get_future_temp
 
 
 def test_get_countries_list():
+    """Verifying country list length"""
 
     countries = get_countries_list()
 
@@ -51,7 +53,9 @@ def test_get_country_plot():
 
     assert India.loc[India["dt"] == "2012-01-01", "year"].iloc[0] == 2012
 
-    assert India.loc[India["dt"] == "2012-01-01", "temperature"].iloc[0] == 24.640833
+    assert round(
+        (India.loc[India["dt"] == "2012-01-01", "temperature"].iloc[0]), 3
+    ) == round(24.640833, 3)
 
     # Triggering Error Handling for assert
 
@@ -68,13 +72,13 @@ def test_get_country_year_temp():
 
     India = get_country_year_temp("India", 2012, test=True)
 
-    assert India.loc[India["year"] == "2012", "country"].iloc[0] == "India"
+    assert India.loc[India["year"] == 2012, "country"].iloc[0] == "India"
 
     # mean = df.groupby('year').averagetemperature.mean()
 
-    minimum = India.groupby("year").averagetemperature.min()
+    minimum = India.groupby("year").averagetemperature.min().iloc[0]
 
-    maximum = India.groupby("year").averagetemperature.max()
+    maximum = India.groupby("year").averagetemperature.max().iloc[0]
 
     statement = get_country_year_temp("India", 2012)
 
@@ -105,9 +109,9 @@ def test_get_city_year_temp():
 
     """test_get_city_year_temp"""
 
-    us = get_city_year_temp("United States", 2010, test=True)
+    us = get_city_year_temp("United States", 2008, test=True)
 
-    assert us.loc[us["year"] == "2008", "country"].iloc[0] == "United States"
+    assert us.loc[us["year"] == 2008, "country"].iloc[0] == "United States"
 
     assert (
         round(
@@ -125,8 +129,6 @@ def test_get_city_year_temp():
     for city in ["Chicago", "New York", "Los Angeles"]:
 
         assert city in check_city
-
-    assert sk.loc[sk["dt"] == "2008-02-01", "averagetemperature"].iloc[0] == -1.824
 
     us["temperature"] = us.groupby(["year", "city"])["averagetemperature"].transform(
         "mean"
@@ -146,26 +148,38 @@ def test_get_city_year_temp():
 
     # triggering error handling for assert
 
-    assert type(get_country_year_temp("Ghibli", "2010")) == str
+    assert type(get_city_year_temp("Ghibli", "2010")) == str
 
-    assert "Ghibli" in get_country_year_temp("Narnia", "2010")
+    assert "Ghibli" in get_city_year_temp("Ghibli", "2010")
 
-    assert type(get_country_year_temp("Puerto Rico", "2022")) == str
+    assert type(get_city_year_temp("Puerto Rico", "2022")) == str
 
-    assert "Data does not exist" in get_country_year_temp("Puerto Rico", "2022")
+    assert "Data does not exist" in get_city_year_temp("Puerto Rico", "2022")
 
     pass
 
 
-# def test_f2():
+def test_get_future_temp():
 
-# doc string and assert statement
+    test_case = pd.read_json(get_future_temp("Uganda"))
+
+    assert test_case.year.unique().min() == 1850
+
+    assert test_case.year.unique().max() == 2013
+
+    avg_temp = (test_case.loc[test_case["year"] == 2009, "averagetemperature"]).iloc[0]
+
+    assert round(avg_temp, 3) == round(24.047167, 3)
+
+    assert type(get_future_temp("Castle Oblivion")) == str
+
+    assert "Data Engineering" in get_future_temp("Data Engineering")
+
+    pass
 
 
-# def test_f3():
-
-# doc string and assert statement
-
-# test_function_1
-# test_function_2
-# test_function_3
+test_get_countries_list()
+test_get_country_plot()
+test_get_country_year_temp()
+test_get_city_year_temp()
+test_get_future_temp()
