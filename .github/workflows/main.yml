@@ -8,6 +8,7 @@ jobs:
       - name: test build-Build and run dev container task
         uses: devcontainers/ci@v0.2
         with:
+          python-version: 3.8
       - name: Install dependencies
         run: |
           make install
