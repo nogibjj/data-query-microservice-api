@@ -27,4 +27,4 @@ deploy:
 	docker tag globaltemperatures706:latest 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
 	docker push 450825970415.dkr.ecr.us-east-1.amazonaws.com/globaltemperatures706:latest
 	
-all: install format lint test #deploy
+all: install format lint test deploy

@@ -21,3 +21,6 @@ jobs:
       - name: Testing
         run: |
           make test
+      - name: Deploy
+        run: |
+          make deploy
