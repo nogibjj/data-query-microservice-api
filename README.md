@@ -13,8 +13,8 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 ## Contents
 
 ### Creation of Database
-Kaggle API to get data
-AWS RDS
+- Kaggle API to get data
+- AWS RDS
 
 ### EDA Implementation
 - Exploring useful information
