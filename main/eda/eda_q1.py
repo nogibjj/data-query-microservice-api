@@ -19,6 +19,7 @@ def cleaner(sql_payload, cursor):
     )
     df_clean = df_clean.sort_values(by=["dt"], ascending=True)
     df_clean = df_clean.replace(to_replace="", value=np.nan, regex=True)
+    df_clean["season"] = df["season"].fillna("no season assigned by ESEP")
     df_clean = df_clean.dropna()
     df_clean["year"] = df_clean["dt"].str[:4].astype(int)
     df_clean["averagetemperature"] = df_clean["averagetemperature"].astype(float)
@@ -93,7 +94,7 @@ def get_country_year_temp(country, year, test=False):
     if test:
 
         return df_country
-    
+
     max_temp = df_country["averagetemperature"].max()
     min_temp = df_country["averagetemperature"].min()
     # mean_temp = df_country["averagetemperature"].mean()
