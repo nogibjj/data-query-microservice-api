@@ -13,13 +13,20 @@ This group project was done as part of IDS706 Data Engineering class at Duke Uni
 ## Contents
 
 ### 1. Creation of Database
+
+We used an api to scrape the dataset and a bash script to insert the rows in an AWS RDS database.
+
 (1) Kaggle API
+
 ![image](https://user-images.githubusercontent.com/112578065/207997214-98d54398-2417-4fe6-9452-9a253ec4960a.png)
 
 (2) AWS RDS
 ![image](https://user-images.githubusercontent.com/112578065/207997090-e6c0e5f4-7f98-44eb-a8dd-8b6733bd6925.png)
 
 ### 2. EDA Implementation
+
+Our features are focused around doing Exploratory Data Analysis, based on user input. Here is a special EDA function showing temperature changes over seasons. 
+
 ![image](https://user-images.githubusercontent.com/112578065/207998382-1f47fc66-b2ba-43c0-bae0-aa9222823484.png)
 
 ### 3. Continuous Integration
