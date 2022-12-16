@@ -4,6 +4,7 @@
 import os
 import sys
 import re
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
 
@@ -14,55 +15,146 @@ from eda.eda_q1 import get_country_plot
 from eda.eda_q1 import get_country_year_temp
 from eda.eda_q1 import get_city_year_temp
 from eda.eda_q1 import get_future_temp
+
 # from eda.eda_q1 import cleaner
+
+
+def test_get_countries_list():
+
+    countries = get_countries_list()
+
+    assert len(countries) == 243
+
+    pass
 
 
 def test_get_country_plot():
 
-    """Testing the non-plot contents of get_country_plot"""
+    """test_get_country_plot"""
 
-    df = get_country_plot("India", test=True)
+    assert type(get_country_plot("India")) == str
 
-    assert df.loc[df["dt"] == "2013-06-01", "averagetemperature"].iloc[0] == 28.766
+    India = pd.read_json(get_country_plot("India"))
 
-    assert type(get_country_plot("Hogwarts", test=True)) == str
+    assert (
+        India.loc[India["dt"] == "2012-01-01", "averagetemperature"].iloc[0] == 16.778
+    )
 
-    assert 'Hogwarts' in get_country_plot("Hogwarts", test=True)
+    assert (
+        India.loc[India["dt"] == "2012-01-01", "averagetemperatureuncertainty"].iloc[0]
+        == 0.267
+    )
+
+    assert India.loc[India["dt"] == "2012-01-01", "country"].iloc[0] == "India"
+
+    assert India.loc[India["dt"] == "2012-01-01", "season"].iloc[0] == "winter"
+
+    assert India.loc[India["dt"] == "2012-01-01", "year"].iloc[0] == 2012
+
+    assert India.loc[India["dt"] == "2012-01-01", "temperature"].iloc[0] == 24.640833
+
+    # Triggering Error Handling for assert
+
+    assert type(get_country_plot("Hogwarts")) == str
+
+    assert "Hogwarts" in get_country_plot("Hogwarts")
 
     pass
 
 
 def test_get_country_year_temp():
 
-    df = get_country_year_temp('Puerto Rico', 2012, test=True)
+    """test_get_country_year_temp"""
 
-    mean = df.groupby('year').averagetemperature.mean()
+    India = get_country_year_temp("India", 2012, test=True)
 
-    minimum = y.groupby('year').averagetemperature.min()
+    assert India.loc[India["year"] == "2012", "country"].iloc[0] == "India"
 
-    maximum = y.groupby('year').averagetemperature.max()
+    # mean = df.groupby('year').averagetemperature.mean()
 
-    statement =  get_country_year_temp('Puerto Rico', 2012)
+    minimum = India.groupby("year").averagetemperature.min()
 
-    metrics = re.findall('[0-9]{4}',statement)
+    maximum = India.groupby("year").averagetemperature.max()
 
-    metrics = [int(i) for i in metrics]
+    statement = get_country_year_temp("India", 2012)
 
-    assert 
+    metrics = re.findall("[0-9]{0,3}\.[0-9]+", statement)
+
+    metrics = [float(i) for i in metrics]
+
+    test_max, test_min = metrics[0], metrics[1]
+
+    assert round(test_max, 2) == round(maximum, 2)
+
+    assert round(test_min, 2) == round(minimum, 2)
+
+    # triggering error handling for assert
+
+    assert type(get_country_year_temp("Narnia", "2010")) == str
+
+    assert "Narnia" in get_country_year_temp("Narnia", "2010")
+
+    assert type(get_country_year_temp("Uganda", "2022")) == str
+
+    assert "Data does not exist" in get_country_year_temp("Uganda", "2022")
+
+    pass
 
 
+def test_get_city_year_temp():
 
-    # error handling 
-    
-    assert type(get_country_year_temp('Narnia','2010')) == str
+    """test_get_city_year_temp"""
 
-    assert 'Narnia' in get_country_year_temp('Narnia','2010')
+    us = get_city_year_temp("United States", 2010, test=True)
 
-    assert type(get_country_year_temp('India','2022')) == str
+    assert us.loc[us["year"] == "2008", "country"].iloc[0] == "United States"
 
-    assert '2022' in get_country_year_temp('India','2022')
+    assert (
+        round(
+            us.loc[
+                (us["dt"] == "2008-12-01") & (us["city"] == "Chicago"),
+                "averagetemperature",
+            ].iloc[0],
+            3,
+        )
+        == -0.664
+    )
 
-# doc string and assert statement
+    check_city = [i for i in us["city"].unique()]
+
+    for city in ["Chicago", "New York", "Los Angeles"]:
+
+        assert city in check_city
+
+    assert sk.loc[sk["dt"] == "2008-02-01", "averagetemperature"].iloc[0] == -1.824
+
+    us["temperature"] = us.groupby(["year", "city"])["averagetemperature"].transform(
+        "mean"
+    )
+    highest = us.sort_values(by=["temperature"], ascending=False).head(1)
+    lowest = us.sort_values(by=["temperature"], ascending=True).head(1)
+    highest_city = highest["city"].values[0]
+    lowest_city = lowest["city"].values[0]
+
+    statement = get_city_year_temp("United States", 2008)
+
+    statement = statement.split(".")
+
+    assert highest_city in statement[0] and highest_city not in statement[1]
+
+    assert lowest_city in statement[1] and lowest_city not in statement[0]
+
+    # triggering error handling for assert
+
+    assert type(get_country_year_temp("Ghibli", "2010")) == str
+
+    assert "Ghibli" in get_country_year_temp("Narnia", "2010")
+
+    assert type(get_country_year_temp("Puerto Rico", "2022")) == str
+
+    assert "Data does not exist" in get_country_year_temp("Puerto Rico", "2022")
+
+    pass
 
 
 # def test_f2():

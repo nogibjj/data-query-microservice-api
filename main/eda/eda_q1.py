@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import statsmodels.api as sm
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
 import helpers
+
 
 def cleaner(sql_payload, cursor):
 
@@ -20,9 +22,9 @@ def cleaner(sql_payload, cursor):
     df_clean = df_clean.dropna()
     df_clean["year"] = df_clean["dt"].str[:4].astype(int)
     df_clean["averagetemperature"] = df_clean["averagetemperature"].astype(float)
-    
 
     return df_clean
+
 
 def get_countries_list():
 
@@ -33,10 +35,11 @@ def get_countries_list():
     for row in cursor.fetchall():
         countries.append(row[0])
 
-    cursor.close() 
+    cursor.close()
     connection.close()
 
     return countries
+
 
 country_list = get_countries_list()
 
@@ -44,7 +47,7 @@ country_list = get_countries_list()
 def get_country_plot(country):
 
     if country not in country_list:
-        
+
         return f"{country} is not in our list of countries found in this dataset. Maybe you mistyped it. These are our available options : {country_list}."
 
     connection, cursor = helpers.connect_to_db()
@@ -66,9 +69,10 @@ def get_country_plot(country):
 
     return df_country_copy.to_json()
 
+
 # Question 2: For a given year and a given country, what is the max/min temperature?
 # TODO: If the year is not found it should not give an error
-def get_country_year_temp(country, year):
+def get_country_year_temp(country, year, test=False):
 
     if country not in country_list:
 
@@ -86,20 +90,27 @@ def get_country_year_temp(country, year):
 
         return "Data does not exist. Try again."
 
+    if test:
+
+        return df_country
+    
     max_temp = df_country["averagetemperature"].max()
     min_temp = df_country["averagetemperature"].min()
     # mean_temp = df_country["averagetemperature"].mean()
 
     result = f"In {country}, during {year}, the maximum temperature was {str(max_temp)} and the minimum temperature was {str(min_temp)}."
 
-    cursor.close() 
+    cursor.close()
     connection.close()
 
     return result
 
+
 # Question 3: For a given year, which city has the highest/lowest temperature on average in a given country?
 # TODO: Try just city here so it's not just major cities
-def get_city_year_temp(country, year):
+
+
+def get_city_year_temp(country, year, test=False):
 
     if country not in country_list:
 
@@ -113,11 +124,15 @@ def get_city_year_temp(country, year):
     country_data = cursor.fetchall()
     df_country = cleaner(country_data, cursor)
 
-    cursor.close() 
+    cursor.close()
     connection.close()
 
     if df_country.empty:
         return "Data does not exist."
+
+    if test:
+
+        return df_country
 
     else:
         df_country["temperature"] = df_country.groupby(["year", "city"])[
@@ -131,6 +146,7 @@ def get_city_year_temp(country, year):
         result = f"In {country}, during {year}, the city with the highest recorded temperature was {highest_city}. The city with the lowest recorded temperature was {lowest_city}."
 
         return result
+
 
 # Question 4: For a given country, what is the future trend of their average temperature?
 def get_future_temp(country):
@@ -148,19 +164,21 @@ def get_future_temp(country):
     df_country = cleaner(country_data, cursor)
 
     if df_country.empty:
-        
+
         return "Data does not exist. Try again."
 
     time_series = df_country.groupby("year")["averagetemperature"].mean().reset_index()
 
-    cursor.close() 
+    cursor.close()
     connection.close()
 
     return time_series.to_json()
 
+
 def main():
 
     get_future_temp("Thailand")
+
 
 if __name__ == "__main__":
     main()
