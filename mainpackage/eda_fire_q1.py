@@ -5,9 +5,7 @@ import os
 import sys
 import statsmodels.api as sm
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-sys.path.append(PROJECT_ROOT)
-import helpers
+import helpers2
 
 
 def cleaner(sql_payload, cursor):
@@ -45,7 +43,7 @@ def cleaner_without_season(sql_payload, cursor):
 
 def get_countries_list():
 
-    connection, cursor = helpers.connect_to_db()
+    connection, cursor = helpers2.connect_to_db()
 
     countries = list()
     cursor.execute(f"select distinct(country) from import.globaltemperaturesbycountry;")
@@ -67,7 +65,7 @@ def get_country_plot(country):
 
         return f"{country} is not in our list of countries found in this dataset. Maybe you mistyped it. These are our available options : {country_list}."
 
-    connection, cursor = helpers.connect_to_db()
+    connection, cursor = helpers2.connect_to_db()
 
     cursor.execute(
         f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}';"
@@ -95,7 +93,7 @@ def get_country_year_temp(country, year, test=False):
 
         return f"{country} is not in our list of countries found in this dataset. Maybe you mistyped it. These are our available options : {country_list}."
 
-    connection, cursor = helpers.connect_to_db()
+    connection, cursor = helpers2.connect_to_db()
 
     cursor.execute(
         f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}' and dt like '%{year}%';"
@@ -133,7 +131,7 @@ def get_city_year_temp(country, year, test=False):
 
         return f"{country} is not in our list of countries found in this dataset. Maybe you mistyped it. These are our available options : {country_list}."
 
-    connection, cursor = helpers.connect_to_db()
+    connection, cursor = helpers2.connect_to_db()
 
     cursor.execute(
         f"SELECT * FROM import.globaltemperaturesbymajorcity where country = '{country}' and dt like '%{year}%';"
@@ -172,7 +170,7 @@ def get_future_temp(country):
 
         return f"{country} is not in our list of countries found in this dataset. Maybe you mistyped it. These are our available options : {country_list}."
 
-    connection, cursor = helpers.connect_to_db()
+    connection, cursor = helpers2.connect_to_db()
 
     cursor.execute(
         f"SELECT * FROM import.globaltemperaturesbycountry where country = '{country}';"

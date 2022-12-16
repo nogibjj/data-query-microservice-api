@@ -8,7 +8,7 @@ from eda_fire_q1 import get_city_year_temp
 from eda_fire_q1 import get_countries_list
 
 if __name__ == "__main__":
-    fire.Fire(eda_q1)
+    fire.Fire()
 
 # don't forget to chmod this file later, erase this line when you do.
 # chmod +x cli-fire.py

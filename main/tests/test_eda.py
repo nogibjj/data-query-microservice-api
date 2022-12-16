@@ -8,7 +8,6 @@ import pandas as pd
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.append(PROJECT_ROOT)
-
 import helpers
 
 from eda.eda_q1 import get_countries_list
@@ -16,6 +15,9 @@ from eda.eda_q1 import get_country_plot
 from eda.eda_q1 import get_country_year_temp
 from eda.eda_q1 import get_city_year_temp
 from eda.eda_q1 import get_future_temp
+from eda.eda_q2 import global_temperatures_decade
+from eda.eda_q2 import global_temperatures_century
+from eda.eda_q2 import get_temperatures_top5
 
 # from eda.eda_q1 import cleaner
 
@@ -178,8 +180,63 @@ def test_get_future_temp():
     pass
 
 
+def test_global_temperatures_decade():
+
+    test_global = pd.read_json(global_temperatures_decade())
+    assert test_global["lastdecade"].shape[0] == 132
+    assert (
+        test_global.loc[test_global["dt"] == 1104537600000, "movingaverage"].iloc[0]
+        == 3.808
+    )
+    assert 10 in test_global["lastdecade"].unique()
+
+
+def test_global_temperatures_century():
+
+    test_century = pd.read_json(global_temperatures_century())
+
+    assert 1915 in test_century.index
+    assert 2015 in test_century.index
+    assert test_century.shape[0] == 101
+    assert test_century.iloc[98, 0] == 9.6065
+
+
+def test_get_temperatures_top5():
+
+    top_5 = ["United States", "China", "Russia", "India", "Japan"]
+
+    core_seasons = ["winter", "spring", "summer", "autumn"]
+
+    all_seasons_df = get_temperatures_top5()
+
+    winter_df, spring_df, summer_df, autumn_df = (
+        pd.read_json(all_seasons_df[0]),
+        pd.read_json(all_seasons_df[1]),
+        pd.read_json(all_seasons_df[2]),
+        pd.read_json(all_seasons_df[3]),
+    )
+
+    count = 0
+
+    for df in [winter_df, spring_df, summer_df, autumn_df]:
+        # print(df)
+        for c in top_5:
+
+            assert c in df["country"].unique()
+
+        assert 1915 in df["year"].unique()
+        assert 2013 in df["year"].unique()
+        unique_seasons = [i for i in df["season"].unique()]
+        assert len(unique_seasons) == 1
+        assert unique_seasons[0] == core_seasons[count]
+        count += 1
+
+
 test_get_countries_list()
 test_get_country_plot()
 test_get_country_year_temp()
 test_get_city_year_temp()
 test_get_future_temp()
+test_global_temperatures_decade()
+test_global_temperatures_century()
+get_temperatures_top5
